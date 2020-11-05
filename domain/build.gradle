@@ -1,0 +1,5 @@
+apply from: "$rootDir/common-module.gradle"
+
+dependencies {
+    implementation Libs.rx_java
+}
