@@ -1,0 +1,13 @@
+apply from: "$rootDir/common-module.gradle"
+apply plugin: 'dagger.hilt.android.plugin'
+
+dependencies {
+    api project(Modules.data)
+    api project(Modules.domain)
+    api Libs.retrofit
+    api Libs.logging_interceptor
+    api Libs.moshi_converter
+    implementation Libs.hilt
+    implementation Libs.rx_java_adapter
+    kapt Libs.hilt_compiler
+}

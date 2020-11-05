@@ -1,0 +1,17 @@
+apply from: "$rootDir/common-module.gradle"
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation Libs.material
+    implementation Libs.constraint_layout
+    implementation Libs.rx_java
+    implementation Libs.rx_android
+    implementation Libs.hilt
+    kapt Libs.hilt_compiler
+}

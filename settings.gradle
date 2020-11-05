@@ -1,0 +1,7 @@
+include ':features:forecast'
+include ':domain'
+include ':data'
+include ':common_di'
+include ':common_ui'
+include ':app'
+rootProject.name = "Weather"

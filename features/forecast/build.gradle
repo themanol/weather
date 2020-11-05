@@ -1,0 +1,35 @@
+apply from: "$rootDir/common-module.gradle"
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-android'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation project(Modules.common_ui)
+    implementation project(Modules.domain)
+    implementation Libs.viewmodel
+    implementation Libs.worker_manager
+    implementation Libs.livedata
+    implementation Libs.location
+    implementation Libs.navigation_fragment
+    implementation Libs.navigation_ktx
+    implementation Libs.androidx_fragments
+    implementation Libs.material
+    implementation Libs.constraint_layout
+    implementation Libs.hilt
+    implementation Libs.hilt_worker
+    implementation Libs.hilt_viewmodel
+    implementation Libs.rx_java
+    implementation Libs.glide
+    kapt Libs.glide_annotations
+    kapt Libs.hilt_compiler
+    kapt Libs.hilt_androidx_compiler
+
+    testImplementation TestLibs.mockk
+    testImplementation TestLibs.arch_core_testing
+}
