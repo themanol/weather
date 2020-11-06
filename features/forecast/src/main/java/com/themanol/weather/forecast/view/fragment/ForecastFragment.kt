@@ -2,23 +2,27 @@ package com.themanol.weather.forecast.view.fragment
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.Task
+import com.themanol.weather.common_ui.view.fragment.BaseFragment
 import com.themanol.weather.forecast.databinding.FragmentForecastBinding
 import com.themanol.weather.forecast.presentation.viewmodel.Error
 import com.themanol.weather.forecast.presentation.viewmodel.ForecastViewModel
@@ -26,12 +30,13 @@ import com.themanol.weather.forecast.presentation.viewmodel.Loading
 import com.themanol.weather.forecast.presentation.viewmodel.Success
 import com.themanol.weather.forecast.presentation.worker.FORECAST_WORKER_TAG
 import com.themanol.weather.forecast.presentation.worker.ForecastWorker
-import com.themanol.weather.common_ui.view.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
 private const val PERMISSION_REQUEST_CODE = 10
+private const val SETTINGS_REQUEST_CODE = 20
 private const val WORKER_TIME = 2L
+private const val PACKAGE = "package"
 
 @AndroidEntryPoint
 class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
@@ -50,6 +55,7 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
+        initListeners()
         getLocationWithPermissionCheck()
     }
 
@@ -70,13 +76,22 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocation(): Task<Location> {
-        return fusedLocationClient.lastLocation
+    private fun getLocation() {
+        fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
                     forecastViewModel.start(it.latitude, it.longitude)
                 }
             }
+    }
+
+    private fun initListeners() {
+        binding.retryButton.setOnClickListener {
+            getLocationWithPermissionCheck()
+        }
+        binding.permissionsButton.setOnClickListener {
+            openPermissionSettings()
+        }
     }
 
     private fun initObservers() {
@@ -85,14 +100,38 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
             {
                 when (it) {
                     Loading -> {
-                        // TODO: Show loading screen
+                        binding.progressCircular.isVisible = true
+                        binding.permissionsGroup.isVisible = false
+                        binding.successGroup.isVisible = false
+                        binding.errorGroup.isVisible = false
                     }
                     Error -> {
-                        // TODO: Show error screen
+                        binding.progressCircular.isVisible = false
+                        binding.permissionsGroup.isVisible = false
+                        binding.successGroup.isVisible = false
+                        binding.errorGroup.isVisible = true
                     }
                     is Success -> {
+                        binding.progressCircular.isVisible = false
+                        binding.permissionsGroup.isVisible = false
+                        binding.errorGroup.isVisible = false
+                        binding.successGroup.isVisible = true
                         initWorker()
                         binding.forecastDescription.text = it.weatherDisplay.description
+                        binding.forecastTemperature.text = it.weatherDisplay.temperature
+                        binding.forecastCity.text = it.weatherDisplay.city
+                        binding.forecastDateOfData.text = it.weatherDisplay.dateOfData
+                        binding.forecastHumidity.text = it.weatherDisplay.humidity
+                        binding.forecastCloudiness.text = it.weatherDisplay.cloudiness
+                        binding.forecastFeelLike.text = it.weatherDisplay.feelsLike
+                        binding.forecastPressure.text = it.weatherDisplay.pressure
+                        binding.forecastVisibility.text = it.weatherDisplay.visibility
+                        binding.forecastWind.text = it.weatherDisplay.wind
+                        Glide.with(binding.forecastIcon)
+                            .load(it.weatherDisplay.icon)
+                            .into(binding.forecastIcon)
+                        binding.forecastWindIcon.rotation =
+                            it.weatherDisplay.windDirection.toFloat()
                     }
                 }
             }
@@ -128,9 +167,25 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
             if (grantResults.firstOrNull() == PERMISSION_GRANTED) {
                 getLocation()
             } else {
-                // TODO: Show request permissions screen
-                Log.d("Weather", "No permission")
+                binding.progressCircular.isVisible = false
+                binding.permissionsGroup.isVisible = true
+                binding.successGroup.isVisible = false
+                binding.errorGroup.isVisible = false
             }
+        }
+    }
+
+    private fun openPermissionSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts(PACKAGE, context?.packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, SETTINGS_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SETTINGS_REQUEST_CODE) {
+            getLocationWithPermissionCheck()
         }
     }
 }

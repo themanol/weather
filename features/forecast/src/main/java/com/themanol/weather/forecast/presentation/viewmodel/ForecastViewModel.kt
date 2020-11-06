@@ -3,15 +3,18 @@ package com.themanol.weather.forecast.presentation.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.themanol.weather.common_ui.view.utils.ResourcesManager
 import com.themanol.weather.common_ui.viewmodel.BaseViewModel
 import com.themanol.weather.common_ui.viewmodel.prepareForUI
 import com.themanol.weather.common_ui.viewmodel.subscribe
 import com.themanol.weather.domain.repository.WeatherRepository
 import com.themanol.weather.forecast.presentation.model.WeatherDisplay
+import com.themanol.weather.forecast.presentation.model.toDisplay
 
 class ForecastViewModel
 @ViewModelInject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val resourcesManager: ResourcesManager
 ) : BaseViewModel() {
 
     private val _state = MutableLiveData<State>()
@@ -33,7 +36,7 @@ class ForecastViewModel
                 onSuccess = { weatherModel ->
                     _state.postValue(
                         Success(
-                            WeatherDisplay(weatherModel.conditionsDescription)
+                            weatherModel.toDisplay(resourcesManager)
                         )
                     )
                 },

@@ -8,14 +8,240 @@
     tools:context=".view.fragment.ForecastFragment">
 
     <TextView
+        android:id="@+id/forecast_city"
+        style="@style/TextAppearance.Weather.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginTop="@dimen/normal_space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="City" />
+
+    <ImageView
+        android:id="@+id/forecast_icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forecast_city" />
+
+    <TextView
+        android:id="@+id/forecast_temperature"
+        style="@style/TextAppearance.Weather.Big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/very_small_space"
+        app:layout_constraintBottom_toBottomOf="@id/forecast_icon"
+        app:layout_constraintStart_toEndOf="@id/forecast_icon"
+        app:layout_constraintTop_toTopOf="@id/forecast_icon"
+        tools:text="18°C" />
+
+    <TextView
+        android:id="@+id/forecast_feel_like"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_icon"
+        tools:text="Feels like 14°C" />
+
+    <TextView
         android:id="@+id/forecast_description"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_feel_like"
+        tools:text="light rain" />
+
+    <TextView
+        android:id="@+id/forecast_Cloudiness"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_description"
+        tools:text="Cloudiness: 50%" />
+
+
+    <TextView
+        android:id="@+id/forecast_humidity"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_Cloudiness"
+        tools:text="Humidity: 50%" />
+
+    <TextView
+        android:id="@+id/forecast_visibility"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_humidity"
+        tools:text="Visibility: 10 km" />
+
+    <TextView
+        android:id="@+id/forecast_pressure"
         style="@style/TextAppearance.Weather.Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/small_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/small_space"
+        android:drawablePadding="@dimen/very_small_space"
+        app:drawableStartCompat="@drawable/ic_gauge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_visibility"
+        tools:text="1014hPa" />
+
+    <ImageView
+        android:id="@+id/forecast_wind_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/small_space"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_north"
+        app:layout_constraintStart_toEndOf="@id/forecast_pressure"
+        app:layout_constraintTop_toBottomOf="@id/forecast_visibility" />
+
+    <TextView
+        android:id="@+id/forecast_wind"
+        style="@style/TextAppearance.Weather.Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/very_small_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/small_space"
+        android:drawablePadding="@dimen/very_small_space"
+        app:layout_constraintStart_toEndOf="@id/forecast_wind_icon"
+        app:layout_constraintTop_toBottomOf="@id/forecast_visibility"
+        tools:text="1.5 m/s" />
+
+    <TextView
+        android:id="@+id/forecast_date_of_data"
+        style="@style/TextAppearance.Weather.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_space"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forecast_wind"
+        tools:text="The data are from Wed, 4 Jul 2001 12:08:56" />
+
+    <TextView
+        android:id="@+id/permissions_title"
+        style="@style/TextAppearance.Weather.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/normal_space"
+        android:gravity="center"
+        android:text="@string/permissions_title"
+        app:layout_constraintBottom_toTopOf="@id/permissions_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/permissions_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_space"
+        android:layout_marginTop="@dimen/big_space"
+        android:layout_marginEnd="@dimen/normal_space"
+        android:text="@string/permission_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permissions_title" />
+
+    <ProgressBar
+        tools:visibility="gone"
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/error_title"
+        style="@style/TextAppearance.Weather.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_space"
+        android:layout_marginEnd="@dimen/normal_space"
+        android:gravity="center"
+        android:text="@string/error_title"
+        app:layout_constraintBottom_toTopOf="@id/retry_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/retry_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_space"
+        android:layout_marginTop="@dimen/big_space"
+        android:layout_marginEnd="@dimen/normal_space"
+        android:text="@string/retry_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/error_title" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/success_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="forecast_city,forecast_date_of_data,forecast_description,
+        forecast_feel_like,forecast_humidity,forecast_icon,forecast_pressure,forecast_temperature,
+        forecast_wind,forecast_wind_icon,forecast_visibility" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/permissions_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="permissions_button,permissions_title" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/error_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="error_title,retry_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

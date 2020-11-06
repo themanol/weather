@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion Android.compileSdkVersion
+    buildToolsVersion Android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Android.minSdkVersion
+        targetSdkVersion Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
+    }
+}
+
+dependencies {
+    implementation Plugins.kotlin_stdlib
+    api TestLibs.junit
+    implementation TestLibs.life_cycle
+    implementation Libs.livedata
+    implementation Libs.rx_java
+    implementation Libs.rx_android
+}

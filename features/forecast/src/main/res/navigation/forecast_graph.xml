@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/forecastFragment"
         android:name="com.themanol.weather.forecast.view.fragment.ForecastFragment"
-        android:label="fragment_forecast"
+        android:label="@string/weather_title"
         tools:layout="@layout/fragment_forecast" />
 </navigation>

@@ -32,4 +32,5 @@ dependencies {
 
     testImplementation TestLibs.mockk
     testImplementation TestLibs.arch_core_testing
+    testImplementation project(Modules.common_test)
 }
