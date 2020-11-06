@@ -1,10 +1,12 @@
 package com.themanol.weather.forecast.view.fragment
 
+import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.location.Location
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -34,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
 private const val PERMISSION_REQUEST_CODE = 10
+private const val PERMISSION_BACKGROUND_REQUEST_CODE = 11
 private const val SETTINGS_REQUEST_CODE = 20
 private const val WORKER_TIME = 2L
 private const val PACKAGE = "package"
@@ -63,12 +66,10 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
         context?.let { _context ->
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(_context)
             if (checkSelfPermission(_context, ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
-                activity?.let {
-                    requestPermissions(
-                        arrayOf(ACCESS_COARSE_LOCATION),
-                        PERMISSION_REQUEST_CODE
-                    )
-                }
+                requestPermissions(
+                    arrayOf(ACCESS_COARSE_LOCATION),
+                    PERMISSION_REQUEST_CODE
+                )
             } else {
                 getLocation()
             }
@@ -116,7 +117,6 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
                         binding.permissionsGroup.isVisible = false
                         binding.errorGroup.isVisible = false
                         binding.successGroup.isVisible = true
-                        initWorker()
                         binding.forecastDescription.text = it.weatherDisplay.description
                         binding.forecastTemperature.text = it.weatherDisplay.temperature
                         binding.forecastCity.text = it.weatherDisplay.city
@@ -132,10 +132,28 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
                             .into(binding.forecastIcon)
                         binding.forecastWindIcon.rotation =
                             it.weatherDisplay.windDirection.toFloat()
+                        initWorkerWithPermissionCheck()
                     }
                 }
             }
         )
+    }
+
+    private fun initWorkerWithPermissionCheck() {
+        context?.let { _context ->
+            if (Build.VERSION.SDK_INT >= 29 && checkSelfPermission(
+                    _context,
+                    ACCESS_BACKGROUND_LOCATION
+                ) != PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(ACCESS_BACKGROUND_LOCATION),
+                    PERMISSION_BACKGROUND_REQUEST_CODE
+                )
+            } else {
+                initWorker()
+            }
+        }
     }
 
     private fun initWorker() {

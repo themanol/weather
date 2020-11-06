@@ -3,6 +3,7 @@
     package="com.themanol.weather.forecast">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <application>
         <activity
             android:name=".view.activity.ForecastActivity"
