@@ -1,6 +1,6 @@
 package com.themanol.weather.domain.model
 
-import java.util.Date
+import java.util.*
 
 data class WeatherModel(
     val city: String,
@@ -25,7 +25,8 @@ data class WeatherConditionsModel(
     val feelsLikeTemperature: Double,
     val minTemperature: Double,
     val maxTemperature: Double,
-    val pressure: Int
+    val pressure: Int,
+    val humidity: Int
 )
 
 data class WindModel(

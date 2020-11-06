@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.themanol.weather.domain.model.WeatherConditionsModel
 import com.themanol.weather.domain.model.WeatherModel
 import com.themanol.weather.domain.model.WindModel
-import java.util.Date
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class WeatherEntity(
@@ -44,7 +44,8 @@ data class WeatherEntity(
                 minTemperature = conditions.tempMin,
                 maxTemperature = conditions.tempMax,
                 feelsLikeTemperature = conditions.feelsLike,
-                pressure = conditions.pressure
+                pressure = conditions.pressure,
+                humidity = conditions.humidity
             ),
             calculationDate = Date(calculationDate * 1000),
             wind = WindModel(
@@ -77,7 +78,8 @@ data class ConditionsEntity(
     @Json(name = "temp_max") val tempMax: Double,
     @Json(name = "pressure") val pressure: Int,
     @Json(name = "sea_level") val seaLevel: Int?,
-    @Json(name = "grnd_level") val groundLevel: Int?
+    @Json(name = "grnd_level") val groundLevel: Int?,
+    @Json(name = "humidity") val humidity: Int
 )
 
 @JsonClass(generateAdapter = true)

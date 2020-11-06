@@ -19,7 +19,6 @@
         <item name="android:textColor">@color/text_dark</item>
     </style>
 
-
     <style name="TextAppearance.Weather.Header" parent="TextAppearance.AppCompat">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">18sp</item>
@@ -28,13 +27,13 @@
 
     <style name="TextAppearance.Weather.Body" parent="TextAppearance.AppCompat">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_medium</item>
     </style>
 
-    <style name="TextAppearance.Weather.Tag" parent="TextAppearance.AppCompat">
+    <style name="TextAppearance.Weather.Big" parent="TextAppearance.AppCompat">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/text_medium</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/text_dark</item>
     </style>
 </resources>

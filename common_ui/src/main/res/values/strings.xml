@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="temperature">%d°C</string>
+    <string name="feels_like">Feels like %d°C</string>
+    <string name="humidity">Humidity: %d%%</string>
+    <string name="cloudiness">Cloudiness: %d%%</string>
+    <string name="visibility">Visibility: %d km</string>
+    <string name="pressure">%d hPa</string>
+    <string name="wind">%s m/s</string>
+    <string name="data_time">The data are from %s</string>
+    <string name="weather_title">Weather forecast</string>
+    <string name="permissions_title">This application does not work without location permission, so please, allow the app access your location in order to show weather in your location</string>
+    <string name="permission_button">Allow location</string>
+    <string name="retry_button">Retry</string>
+    <string name="error_title">Oops!, something was wrong, please retry.</string>
 </resources>
