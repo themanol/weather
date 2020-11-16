@@ -5,6 +5,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -80,9 +81,8 @@ class ForecastFragment : BaseFragment<FragmentForecastBinding>() {
     private fun getLocation() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
-                location?.let {
-                    forecastViewModel.start(it.latitude, it.longitude)
-                }
+                val currentLocation = location ?: Location(LocationManager.PASSIVE_PROVIDER)
+                forecastViewModel.start(currentLocation.latitude, currentLocation.longitude)
             }
     }
 
